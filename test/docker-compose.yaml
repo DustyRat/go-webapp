@@ -1,0 +1,29 @@
+version: '3.5'
+
+services:
+  unit_tests:
+    container_name: unit_tests
+    build:
+      context: ../
+      dockerfile: ./test/Dockerfile
+    environment:
+      - "MONGO_URL=mongodb://mongo:27017"
+    volumes:
+      - ./:/coverage
+    working_dir:  "/root"
+    command: "go test ./... -coverprofile=/coverage/coverage.out"
+    depends_on:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo:latest
+    ports:
+      - "27017-27019:27017-27019"
+    expose:
+      - "27017-27019"
+    environment:
+      - MONGO_INITDB_DATABASE=Unit
+    volumes:
+      - ./mock/mongo:/docker-entrypoint-initdb.d
+      - ../scripts/mongo:/docker-entrypoint-initdb.d/collection:ro
+    restart: on-failure
