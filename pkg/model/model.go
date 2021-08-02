@@ -60,7 +60,7 @@ type Document struct {
 	// swagger:strfmt bsonobjectid
 	ID *primitive.ObjectID `json:"id,omitempty" bson:"-"`
 
-	Audit Audit `json:",inline" bson:"_"`
+	Audit `json:",inline" bson:"_"`
 
 	// TODO: Add fields
 }

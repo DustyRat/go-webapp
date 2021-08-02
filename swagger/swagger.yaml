@@ -1,0 +1,523 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  Audit:
+    properties:
+      createdBy:
+        $ref: '#/definitions/User'
+      createdTs:
+        description: Created Timestamp
+        example: "2006-01-02T15:04:05.999Z"
+        format: date-time
+        readOnly: true
+        type: string
+        x-go-name: CreatedTs
+      updatedBy:
+        $ref: '#/definitions/User'
+      updatedTs:
+        description: Updated Timestamp
+        example: "2006-01-02T15:04:05.999Z"
+        format: date-time
+        readOnly: true
+        type: string
+        x-go-name: UpdatedTs
+      version:
+        description: Version
+        example: 1
+        format: uint64
+        readOnly: true
+        type: integer
+        x-go-name: Version
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  ConflictResponse:
+    properties:
+      error:
+        description: Error
+        example: stale update
+        type: string
+        x-go-name: Error
+      message:
+        description: Message
+        example: The document submitted is stale, please refresh and try again
+        type: string
+        x-go-name: Message
+    title: ConflictResponse ...
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  CreatedResponse:
+    properties:
+      id:
+        description: ID
+        example: "000000000000000000000000"
+        format: bsonobjectid
+        readOnly: true
+        type: string
+        x-go-name: ID
+    title: CreatedResponse ...
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  Document:
+    properties:
+      createdBy:
+        $ref: '#/definitions/User'
+      createdTs:
+        description: Created Timestamp
+        example: "2006-01-02T15:04:05.999Z"
+        format: date-time
+        readOnly: true
+        type: string
+        x-go-name: CreatedTs
+      id:
+        description: ID
+        example: "000000000000000000000000"
+        format: bsonobjectid
+        readOnly: true
+        type: string
+        x-go-name: ID
+      updatedBy:
+        $ref: '#/definitions/User'
+      updatedTs:
+        description: Updated Timestamp
+        example: "2006-01-02T15:04:05.999Z"
+        format: date-time
+        readOnly: true
+        type: string
+        x-go-name: UpdatedTs
+      version:
+        description: Version
+        example: 1
+        format: uint64
+        readOnly: true
+        type: integer
+        x-go-name: Version
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  ErrorResponse:
+    properties:
+      error:
+        type: string
+        x-go-name: Err
+      errors:
+        $ref: '#/definitions/Errors'
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  Errors:
+    description: Errors holds multiple errors
+    items:
+      type: string
+    type: array
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  ForbiddenResponse:
+    properties:
+      error:
+        description: Error
+        example: The request is forbidden
+        type: string
+        x-go-name: Error
+      message:
+        description: Message
+        example: 'user does not have access to [ BusinessUnit: ''8'', BusinessLine:
+          ''MEDICARE'' ]'
+        type: string
+        x-go-name: Message
+    title: ForbiddenResponse ...
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  Link:
+    description: Link reference pagination links
+    properties:
+      href:
+        description: Link
+        example: /birth?page=2
+        type: string
+        x-go-name: Href
+      rel:
+        description: Relitive
+        example: next
+        type: string
+        x-go-name: Rel
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  List:
+    description: List paginated list of Documents
+    properties:
+      count:
+        format: int64
+        type: integer
+        x-go-name: Count
+      documents:
+        items:
+          $ref: '#/definitions/Document'
+        type: array
+        x-go-name: Documents
+      links:
+        items:
+          $ref: '#/definitions/Link'
+        type: array
+        x-go-name: Links
+      page:
+        format: int64
+        type: integer
+        x-go-name: Page
+      warnings:
+        $ref: '#/definitions/Errors'
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  OKResponse:
+    properties:
+      id:
+        description: ID
+        example: "000000000000000000000000"
+        format: bsonobjectid
+        readOnly: true
+        type: string
+        x-go-name: ID
+    title: OKResponse ...
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  ObjectID:
+    items:
+      format: uint8
+      type: integer
+    title: ObjectID is the BSON ObjectID type.
+    type: array
+    x-go-package: go.mongodb.org/mongo-driver/bson/primitive
+  UnauthorizedResponse:
+    properties:
+      error:
+        description: Error
+        example: The request is not authorized
+        type: string
+        x-go-name: Error
+      message:
+        description: Message
+        example: malformed token
+        type: string
+        x-go-name: Message
+    title: UnauthorizedResponse ...
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  UpdatedResponse:
+    properties:
+      id:
+        description: ID
+        example: "000000000000000000000000"
+        format: bsonobjectid
+        readOnly: true
+        type: string
+        x-go-name: ID
+    title: UpdatedResponse ...
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+  User:
+    properties:
+      firstName:
+        description: First Name
+        example: John
+        readOnly: true
+        type: string
+        x-go-name: FirstName
+      lastName:
+        description: Last Name
+        example: Doe
+        readOnly: true
+        type: string
+        x-go-name: LastName
+      username:
+        description: Username
+        example: john.doe
+        readOnly: true
+        type: string
+        x-go-name: Username
+    type: object
+    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+info:
+  contact:
+    email: dustin.k.ratcliffe@gmail.com
+    name: Dustin Ratcliffe
+  description: Golang Web App Example
+  title: Golang Web App Example
+  version: 1.0.0
+paths:
+  /document:
+    post:
+      consumes:
+      - application/json
+      operationId: insert
+      parameters:
+      - in: body
+        name: request
+        schema:
+          $ref: '#/definitions/Document'
+          type: object
+        type: object
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/CreatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenResponse'
+        "422":
+          description: Unprocessable Entity
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        default:
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      schemes:
+      - http
+      - https
+      security:
+      - Bearer: []
+      tags:
+      - Document
+  /document/{id}:
+    delete:
+      consumes:
+      - application/json
+      operationId: delete
+      parameters:
+      - description: MongoDB Object ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: MongoDB Object ID.
+          type: string
+        type: string
+      produces:
+      - application/json
+      responses:
+        "204":
+          $ref: '#/responses/null'
+          description: No Content
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/ConflictResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        default:
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      schemes:
+      - http
+      - https
+      security:
+      - Bearer: []
+      tags:
+      - Document
+    get:
+      consumes:
+      - application/json
+      operationId: get
+      parameters:
+      - description: MongoDB Object ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: MongoDB Object ID.
+          type: string
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/Document'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        default:
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      schemes:
+      - http
+      - https
+      security:
+      - Bearer: []
+      tags:
+      - Document
+    put:
+      consumes:
+      - application/json
+      operationId: update
+      parameters:
+      - description: MongoDB Object ID.
+        in: path
+        name: id
+        required: true
+        schema:
+          description: MongoDB Object ID.
+          type: string
+        type: string
+      - in: body
+        name: request
+        schema:
+          $ref: '#/definitions/Document'
+          type: object
+        type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/UpdatedResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
+        "403":
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/ForbiddenResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "409":
+          description: Conflict
+          schema:
+            $ref: '#/definitions/ConflictResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        default:
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      schemes:
+      - http
+      - https
+      security:
+      - Bearer: []
+      tags:
+      - Document
+  /documents:
+    get:
+      consumes:
+      - application/json
+      operationId: find
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/List'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "401":
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/UnauthorizedResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        "501":
+          description: Not Implemented
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+        default:
+          description: ErrorResponse
+          schema:
+            $ref: '#/definitions/ErrorResponse'
+      schemes:
+      - http
+      - https
+      security:
+      - Bearer: []
+      tags:
+      - Document
+produces:
+- application/json
+schemes:
+- https
+security:
+- Bearer: []
+securityDefinitions:
+  Bearer:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

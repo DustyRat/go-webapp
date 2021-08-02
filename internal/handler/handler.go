@@ -49,7 +49,7 @@ func AddHandlers(r *router.Router, buildinfo *service.BuildInfo, ctrl *controlle
 	r.HandleWithMetrics("/document/{id}", middleware.Logger(middleware.RBAC(rbac, delete(ctrl)))).Methods(http.MethodDelete)
 }
 
-// swagger:route POST / Document insert
+// swagger:route POST /document Document insert
 //
 //     Consumes:
 //     - application/json
@@ -122,7 +122,7 @@ func insert(ctrl *controller.Controller) http.HandlerFunc {
 	}
 }
 
-// swagger:route GET / Document find
+// swagger:route GET /documents Document find
 //
 //     Consumes:
 //     - application/json
@@ -188,7 +188,7 @@ func find(ctrl *controller.Controller) http.HandlerFunc {
 	}
 }
 
-// swagger:route GET /{id} Document get
+// swagger:route GET /document/{id} Document get
 //
 //     Consumes:
 //     - application/json
@@ -262,7 +262,7 @@ func get(ctrl *controller.Controller) http.HandlerFunc {
 	}
 }
 
-// swagger:route PUT /{id} Document update
+// swagger:route PUT /document/{id} Document update
 //
 //     Consumes:
 //     - application/json
@@ -380,7 +380,7 @@ func update(ctrl *controller.Controller) http.HandlerFunc {
 	}
 }
 
-// swagger:route DELETE /{id} Document delete
+// swagger:route DELETE /document/{id} Document delete
 //
 //     Consumes:
 //     - application/json
