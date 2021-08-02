@@ -1,18 +1,18 @@
 FROM golang:alpine
 
-# Set necessary environment variables needed for our image
-ENV GO111MODULE=on
-
 # Get build arguments
-ARG SHORT_COMMIT
-ARG NOW
-ARG HOSTNAME
+ARG BUILD_DATE
+ARG BUILD_HOST
 ARG GIT_URL
-ARG ENVIRONMENT
-ARG BRANCH_NAME
+ARG BRANCH
+ARG SHA
 
 # Install Tools and dependencies
-RUN apk add --update --no-cache openssl-dev musl-dev zlib-dev curl tzdata
+RUN apk update; \
+    apk add --update --no-cache openssl-dev musl-dev zlib-dev curl tzdata
+
+# Set necessary environment variables needed for our image
+ENV GO111MODULE=on
 
 # Move to working directory /build
 WORKDIR /build
@@ -27,12 +27,11 @@ COPY . .
 
 # Build the application
 RUN go build -ldflags "\
-    -X main.buildDate=$NOW \
-    -X main.buildHost=$HOSTNAME \
+    -X main.buildDate=$BUILD_DATE \
+    -X main.buildHost=$BUILD_HOST \
     -X main.gitURL=$GIT_URL \
-    -X main.environment=$ENVIRONMENT \
-    -X main.branch=$BRANCH_NAME \
-    -X main.version=$SHORT_COMMIT" \
+    -X main.branch=$BRANCH \
+    -X main.sha=$SHA \
     -o main ./cmd/svr/main.go;
 
 # Move to / directory as the place for resulting binary folder

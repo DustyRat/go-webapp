@@ -5,19 +5,71 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/DustyRat/go-webapp/internal/controller"
 	"github.com/DustyRat/go-webapp/pkg/model"
+
+	router "github.com/DustyRat/go-metrics/router/mux"
+
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/rs/zerolog/log"
 )
 
 // BuildInfo ...
 type BuildInfo struct {
 	Start     time.Time `json:"-"`
 	Uptime    string    `json:"uptime,omitempty"`
-	Version   string    `json:"version,omitempty"`
 	BuildDate string    `json:"build_date,omitempty"`
 	BuildHost string    `json:"build_host,omitempty"`
 	GitURL    string    `json:"git_url,omitempty"`
 	Branch    string    `json:"branch,omitempty"`
+	SHA       string    `json:"sha,omitempty"`
 	Debug     bool      `json:"debug"`
+}
+
+// AddHandlers add system endpoints used by k8s and prometheus gather readiness, health, metrics, ect...
+func AddHandlers(r *router.Router, buildinfo *BuildInfo, ctrl *controller.Controller, debug bool) {
+	r.Handle("/info", info(buildinfo)).Methods(http.MethodGet, http.MethodHead)
+	r.Handle("/ready", ready(ctrl)).Methods(http.MethodGet, http.MethodHead)
+	r.Handle("/health", health()).Methods(http.MethodGet, http.MethodHead)
+	r.Handle("/metrics", promhttp.Handler())
+
+	fs := http.FileServer(http.Dir("./swagger/"))
+	r.PathPrefix("/swagger/").Handler(http.StripPrefix("/swagger/", fs))
+	http.Handle("/swagger/", r)
+
+	if debug {
+		log.Warn().Msg("pprof enabled")
+		r.PathPrefix("/debug/pprof").Handler(http.DefaultServeMux)
+		go func() {
+			log.Error().Err(http.ListenAndServe("localhost:6060", nil)).Send()
+		}()
+	}
+}
+
+func info(buildinfo *BuildInfo) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		buildinfo.Uptime = time.Since(buildinfo.Start).String()
+		RespondWithJSON(w, http.StatusOK, buildinfo)
+	}
+}
+
+func ready(ctrl *controller.Controller) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		err := ctrl.Ready()
+		if err != nil {
+			Respond(w, http.StatusServiceUnavailable, []byte(http.StatusText(http.StatusServiceUnavailable)))
+		} else {
+			Respond(w, http.StatusOK, []byte(http.StatusText(http.StatusOK)))
+		}
+	}
+}
+
+func health() http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		Respond(w, http.StatusOK, []byte(http.StatusText(http.StatusOK)))
+	}
 }
 
 // RespondWithError ...

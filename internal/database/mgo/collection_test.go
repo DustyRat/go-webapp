@@ -44,7 +44,7 @@ func TestInsert(t *testing.T) {
 	}
 
 	type args struct {
-		document model.Model
+		document model.Document
 	}
 	type want struct {
 		Result *mongo.InsertOneResult
@@ -94,7 +94,7 @@ func TestFind(t *testing.T) {
 		opts   []*options.FindOptions
 	}
 	type want struct {
-		Documents []model.Model
+		Documents []model.Document
 		Err       error
 	}
 	tests := []struct {
@@ -140,7 +140,7 @@ func TestGet(t *testing.T) {
 		id primitive.ObjectID
 	}
 	type want struct {
-		Document model.Model
+		Document model.Document
 		Err      error
 	}
 	tests := []struct {
@@ -154,7 +154,7 @@ func TestGet(t *testing.T) {
 				id: utils.PrimitiveObjectID("000000000000000000000000"),
 			},
 			want: want{
-				Document: model.Model{},
+				Document: model.Document{},
 				Err:      mongo.ErrNoDocuments,
 			},
 		},
@@ -193,7 +193,7 @@ func TestUpdate(t *testing.T) {
 
 	type args struct {
 		id       primitive.ObjectID
-		document model.Model
+		document model.Document
 	}
 	type want struct {
 		Result *mongo.UpdateResult
@@ -209,7 +209,7 @@ func TestUpdate(t *testing.T) {
 			name: "No Documents",
 			args: args{
 				id:       utils.PrimitiveObjectID("000000000000000000000000"),
-				document: model.Model{},
+				document: model.Document{},
 			},
 			want: want{
 				Result: &mongo.UpdateResult{
@@ -256,7 +256,7 @@ func TestDelete(t *testing.T) {
 
 	type args struct {
 		id       primitive.ObjectID
-		document model.Model
+		document model.Document
 	}
 	type want struct {
 		Result *mongo.DeleteResult
@@ -272,7 +272,7 @@ func TestDelete(t *testing.T) {
 			name: "No Documents",
 			args: args{
 				id:       utils.PrimitiveObjectID("000000000000000000000000"),
-				document: model.Model{},
+				document: model.Document{},
 			},
 			want: want{
 				Result: &mongo.DeleteResult{

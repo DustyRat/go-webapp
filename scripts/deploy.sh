@@ -14,36 +14,36 @@ deploy(){
             # REGISTRY_URL=<REGISTRY_URL>
             # CAPTURE=<CAPTURE>
             # ENVIRONMENT=prod
+            # export TILLER_NAMESPACE=<TILLER_NAMESPACE> # Backwards support for helm 2
             # NAMESPACE=<NAMESPACE>
         elif [ "$CONTEXT" = "test" ]; then
             # REGISTRY_URL=<REGISTRY_URL>
             # CAPTURE=<CAPTURE>
             # ENVIRONMENT=test
+            # export TILLER_NAMESPACE=<TILLER_NAMESPACE> # Backwards support for helm 2
             # NAMESPACE=<NAMESPACE>
         elif [ "$CONTEXT" = "dev" ]; then
             # REGISTRY_URL=<REGISTRY_URL>
             # CAPTURE=<CAPTURE>
             # ENVIRONMENT=dev
+            # export TILLER_NAMESPACE=<TILLER_NAMESPACE> # Backwards support for helm 2
             # NAMESPACE=<NAMESPACE>
         else
             echo "Invalid context '$CONTEXT'"
             exit 1
         fi;
 
-        BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
-        SHORT_COMMIT=$(echo $BRANCH_NAME | cut -c1-2)-$(git rev-parse --short=8 HEAD)
-
         CAPTURE_URL="$REGISTRY_URL/$CAPTURE"
         REPOSITORY="$CAPTURE_URL/$CONTAINER_NAME"
-        TAG="$REPOSITORY:$SHORT_COMMIT"
+        TAG=v$(git rev-parse --short=8 HEAD)
 
         echo Deploying ${TAG}
         echo Namespace ${NAMESPACE}
         echo Environment ${ENVIRONMENT}
-        helm2 upgrade $CONTAINER_NAME -i $HELM_CHART \
+        helm upgrade $CONTAINER_NAME -i $HELM_CHART \
             --set image.repository=$REPOSITORY \
-            --set image.tag=$SHORT_COMMIT \
-            # --set ingress.env=$ENVIRONMENT \
+            --set image.tag=$TAG \
+            # --set custom.keys=values \
             --namespace=$NAMESPACE \
             --kube-context $CONTEXT
     fi;

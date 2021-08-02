@@ -61,7 +61,7 @@ func (c *Controller) GetVersion(ctx context.Context, hex string) (uint, error) {
 }
 
 // Insert ...
-func (c *Controller) Insert(ctx context.Context, user model.User, dto dtoModel.Model) (*mongo.InsertOneResult, error) {
+func (c *Controller) Insert(ctx context.Context, user model.User, dto dtoModel.Document) (*mongo.InsertOneResult, error) {
 	start := time.Now()
 	defer metrics.ObserveCaller("controller", start)
 
@@ -85,13 +85,13 @@ func (c *Controller) Insert(ctx context.Context, user model.User, dto dtoModel.M
 }
 
 // Find ...
-func (c *Controller) Find(ctx context.Context, query url.Values, opts options.Options) ([]dtoModel.Model, int, bool, []error, []error, error) {
+func (c *Controller) Find(ctx context.Context, query url.Values, opts options.Options) ([]dtoModel.Document, int, bool, []error, []error, error) {
 	start := time.Now()
 	defer metrics.ObserveCaller("controller", start)
 
 	match, errs, warnings := mgo.ParseQuery(query)
 	if len(errs) > 0 {
-		return []dtoModel.Model{}, 0, false, errs, warnings, nil
+		return []dtoModel.Document{}, 0, false, errs, warnings, nil
 	}
 
 	o := moptions.Find().SetSkip(int64(opts.Skip())).SetLimit(int64(opts.Limit() + 1))
@@ -102,10 +102,10 @@ func (c *Controller) Find(ctx context.Context, query url.Values, opts options.Op
 
 	details, err := mgo.Find(ctx, c.collection, match, o)
 	if err != nil {
-		return []dtoModel.Model{}, 0, false, nil, nil, err
+		return []dtoModel.Document{}, 0, false, nil, nil, err
 	}
 
-	dtos := make([]dtoModel.Model, 0)
+	dtos := make([]dtoModel.Document, 0)
 	for _, document := range details {
 		dtos = append(dtos, model.TransformToDTO(document))
 	}
@@ -119,7 +119,7 @@ func (c *Controller) Find(ctx context.Context, query url.Values, opts options.Op
 }
 
 // Get ...
-func (c *Controller) Get(ctx context.Context, hex string) (*dtoModel.Model, error) {
+func (c *Controller) Get(ctx context.Context, hex string) (*dtoModel.Document, error) {
 	start := time.Now()
 	defer metrics.ObserveCaller("controller", start)
 	id, err := primitive.ObjectIDFromHex(hex)
@@ -136,7 +136,7 @@ func (c *Controller) Get(ctx context.Context, hex string) (*dtoModel.Model, erro
 }
 
 // Update ...
-func (c *Controller) Update(ctx context.Context, user model.User, hex string, dto dtoModel.Model) (*mongo.UpdateResult, error) {
+func (c *Controller) Update(ctx context.Context, user model.User, hex string, dto dtoModel.Document) (*mongo.UpdateResult, error) {
 	start := time.Now()
 	defer metrics.ObserveCaller("controller", start)
 	id, err := primitive.ObjectIDFromHex(hex)

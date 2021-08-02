@@ -52,8 +52,8 @@ func (e Errors) Contains(err ...error) bool {
 	return false
 }
 
-// swagger:model Model
-type Model struct {
+// swagger:model Document
+type Document struct {
 	// ID
 	// ReadOnly: true
 	// Example: 000000000000000000000000

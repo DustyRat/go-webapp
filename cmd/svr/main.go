@@ -40,23 +40,23 @@ import (
 )
 
 var (
-	branch,
 	buildDate,
 	buildHost,
 	gitURL,
-	version string
+	branch,
+	sha string
 	start = time.Now()
 )
 
 func main() {
 	zerolog.ErrorStackMarshaler = pkgerrors.MarshalStack
 	err := server.Run(&service.BuildInfo{
-		Branch:    branch,
 		BuildDate: buildDate,
 		BuildHost: buildHost,
 		GitURL:    gitURL,
+		Branch:    branch,
+		SHA:       sha,
 		Start:     start,
-		Version:   version,
 	})
 	if err != nil {
 		log.Fatal().Stack().Caller().Err(err).Send()

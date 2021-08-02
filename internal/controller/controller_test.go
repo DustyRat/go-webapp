@@ -28,7 +28,7 @@ var (
 			URL:      "mongodb://localhost:27017",
 		},
 		Collections: map[string]string{
-			"Model": "Model",
+			"Document": "Document",
 		},
 	}
 )
@@ -119,12 +119,12 @@ func TestController_Insert(t *testing.T) {
 
 	opts := cmp.Options{
 		utils.EquateErrors(),
-		cmpopts.IgnoreFields(dto.Model{}, "ID"),
+		cmpopts.IgnoreFields(dto.Document{}, "ID"),
 		cmpopts.IgnoreFields(dto.Audit{}, "CreatedTs", "UpdatedTs"),
 	}
 	type args struct {
 		user model.User
-		dto  dto.Model
+		dto  dto.Document
 	}
 	type want struct {
 		Result *mongo.InsertOneResult
@@ -177,7 +177,7 @@ func TestController_Find(t *testing.T) {
 		opts  options.Options
 	}
 	type want struct {
-		Documents []dto.Model
+		Documents []dto.Document
 		Count     int
 		More      bool
 		Errs      []error
@@ -236,7 +236,7 @@ func TestController_Get(t *testing.T) {
 		hex string
 	}
 	type want struct {
-		Document *dto.Model
+		Document *dto.Document
 		Err      error
 	}
 	tests := []struct {
@@ -325,7 +325,7 @@ func TestController_Update(t *testing.T) {
 	type args struct {
 		user model.User
 		hex  string
-		dto  dto.Model
+		dto  dto.Document
 	}
 
 	type want struct {
@@ -344,7 +344,7 @@ func TestController_Update(t *testing.T) {
 			args: args{
 				user: model.User{},
 				hex:  "01",
-				dto:  dto.Model{},
+				dto:  dto.Document{},
 			},
 			want: want{
 				Result: nil,
@@ -356,7 +356,7 @@ func TestController_Update(t *testing.T) {
 			args: args{
 				user: model.User{},
 				hex:  "ZXCVBNM<ASDFGHJKL:",
-				dto:  dto.Model{},
+				dto:  dto.Document{},
 			},
 			want: want{
 				Result: nil,
@@ -368,7 +368,7 @@ func TestController_Update(t *testing.T) {
 			args: args{
 				user: model.User{},
 				hex:  "0",
-				dto:  dto.Model{},
+				dto:  dto.Document{},
 			},
 			want: want{
 				Result: nil,
@@ -384,7 +384,7 @@ func TestController_Update(t *testing.T) {
 					FirstName: "John",
 				},
 				hex: "000000000000000000000000",
-				dto: dto.Model{},
+				dto: dto.Document{},
 			},
 			want: want{
 				Result: &mongo.UpdateResult{},

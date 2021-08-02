@@ -18,10 +18,10 @@ import (
 )
 
 // Collection Key
-const Collection = "Model"
+const Collection = "Document"
 
 // Insert ...
-func Insert(ctx context.Context, collection *mgo.Collection, document model.Model) (*mongo.InsertOneResult, error) {
+func Insert(ctx context.Context, collection *mgo.Collection, document model.Document) (*mongo.InsertOneResult, error) {
 	start := time.Now()
 	defer metrics.ObserveCaller("mongo", start)
 
@@ -47,7 +47,7 @@ func Insert(ctx context.Context, collection *mgo.Collection, document model.Mode
 }
 
 // Find ...
-func Find(ctx context.Context, collection *mgo.Collection, filter bson.M, opts ...*options.FindOptions) ([]model.Model, error) {
+func Find(ctx context.Context, collection *mgo.Collection, filter bson.M, opts ...*options.FindOptions) ([]model.Document, error) {
 	start := time.Now()
 	defer metrics.ObserveCaller("mongo", start)
 
@@ -57,7 +57,7 @@ func Find(ctx context.Context, collection *mgo.Collection, filter bson.M, opts .
 		e.Int64("resp_time", time.Now().Sub(start).Milliseconds()).Err(err).Send()
 	}(e, start)
 
-	documents := make([]model.Model, 0)
+	documents := make([]model.Document, 0)
 	cur, err := collection.Find(ctx, filter, opts...)
 	if err != nil {
 		return documents, err
@@ -65,7 +65,7 @@ func Find(ctx context.Context, collection *mgo.Collection, filter bson.M, opts .
 	defer cur.Close(ctx)
 
 	for cur.Next(ctx) {
-		var document model.Model
+		var document model.Document
 		err := cur.Decode(&document)
 		if err != nil {
 			return documents, err
@@ -76,7 +76,7 @@ func Find(ctx context.Context, collection *mgo.Collection, filter bson.M, opts .
 }
 
 // Get ...
-func Get(ctx context.Context, collection *mgo.Collection, id primitive.ObjectID) (model.Model, error) {
+func Get(ctx context.Context, collection *mgo.Collection, id primitive.ObjectID) (model.Document, error) {
 	start := time.Now()
 	defer metrics.ObserveCaller("mongo", start)
 
@@ -88,7 +88,7 @@ func Get(ctx context.Context, collection *mgo.Collection, id primitive.ObjectID)
 
 	filter := bson.M{"_id": id}
 
-	document := model.Model{}
+	document := model.Document{}
 	err = collection.FindOne(ctx, filter).Decode(&document)
 	if err != nil {
 		return document, err
@@ -97,7 +97,7 @@ func Get(ctx context.Context, collection *mgo.Collection, id primitive.ObjectID)
 }
 
 // Update ...
-func Update(ctx context.Context, collection *mgo.Collection, id primitive.ObjectID, document model.Model) (*mongo.UpdateResult, error) {
+func Update(ctx context.Context, collection *mgo.Collection, id primitive.ObjectID, document model.Document) (*mongo.UpdateResult, error) {
 	start := time.Now()
 	defer metrics.ObserveCaller("mongo", start)
 

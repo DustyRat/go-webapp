@@ -41,7 +41,8 @@ func Run(info *service.BuildInfo) error {
 
 	mux := mux.NewRouter()
 	r := router.New(mux)
-	handler.AddHandlers(r, info, ctrl, conf.Debug)
+	service.AddHandlers(r, info, ctrl, conf.Debug)
+	handler.AddHandlers(r, info, ctrl)
 
 	srv := http.Server{
 		Addr:    fmt.Sprintf(":%d", conf.Port),

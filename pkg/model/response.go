@@ -88,11 +88,11 @@ type UpdatedResponse struct {
 // List paginated list of Documents
 // swagger:model List
 type List struct {
-	Documents []Model `json:"documents"`
-	Page      int     `json:"page"`
-	Count     int     `json:"count"`
-	Links     []Link  `json:"links"`
-	Warnings  Errors  `json:"warnings,omitempty"`
+	Documents []Document `json:"documents"`
+	Page      int        `json:"page"`
+	Count     int        `json:"count"`
+	Links     []Link     `json:"links"`
+	Warnings  Errors     `json:"warnings,omitempty"`
 }
 
 // Link reference pagination links

@@ -23,7 +23,7 @@ var (
 			URL:      "mongodb://localhost:27017",
 		},
 		Collections: map[string]string{
-			"Model": "Model",
+			"Document": "Document",
 		},
 	}
 )

@@ -17,7 +17,6 @@ import (
 	router "github.com/DustyRat/go-metrics/router/mux"
 
 	"github.com/gorilla/mux"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -41,60 +40,16 @@ func rbac(w http.ResponseWriter, r *http.Request) (middleware.User, error) {
 	return middleware.User{SAMAccountName: "ANONYMOUS"}, nil
 }
 
-// AddHandlers adds handlers.
-func AddHandlers(r *router.Router, buildinfo *service.BuildInfo, ctrl *controller.Controller, debug bool) {
-	r.HandleWithMetrics("/", middleware.Logger(middleware.RBAC(rbac, insert(ctrl)))).Methods(http.MethodPost)
-	r.HandleWithMetrics("/", middleware.Logger(middleware.RBAC(rbac, find(ctrl)))).Methods(http.MethodGet)
-	r.HandleWithMetrics("/{id}", middleware.Logger(middleware.RBAC(rbac, get(ctrl)))).Methods(http.MethodGet)
-	r.HandleWithMetrics("/{id}", middleware.Logger(middleware.RBAC(rbac, update(ctrl)))).Methods(http.MethodPut)
-	r.HandleWithMetrics("/{id}", middleware.Logger(middleware.RBAC(rbac, delete(ctrl)))).Methods(http.MethodDelete)
-
-	// create basic endpoints used for dev ops and prod support
-	r.Handle("/info", info(buildinfo)).Methods(http.MethodGet, http.MethodHead)
-	r.Handle("/ready", ready(ctrl)).Methods(http.MethodGet, http.MethodHead)
-	r.Handle("/health", health()).Methods(http.MethodGet, http.MethodHead)
-	r.Handle("/metrics", promhttp.Handler())
-
-	// fs := http.FileServer(http.Dir("./swagger/"))
-	// r.PathPrefix("/swagger/").Handler(http.StripPrefix("/swagger/", fs))
-	// http.Handle("/swagger/", r)
-
-	// if debug {
-	// 	log.Warn().Msg("pprof enabled")
-	// 	r.PathPrefix("/debug/pprof").Handler(http.DefaultServeMux)
-	// 	go func() {
-	// 		log.Error().Err(http.ListenAndServe("localhost:6060", nil)).Send()
-	// 	}()
-	// }
+// AddHandlers ...
+func AddHandlers(r *router.Router, buildinfo *service.BuildInfo, ctrl *controller.Controller) {
+	r.HandleWithMetrics("/document", middleware.Logger(middleware.RBAC(rbac, insert(ctrl)))).Methods(http.MethodPost)
+	r.HandleWithMetrics("/documents", middleware.Logger(middleware.RBAC(rbac, find(ctrl)))).Methods(http.MethodGet)
+	r.HandleWithMetrics("/document/{id}", middleware.Logger(middleware.RBAC(rbac, get(ctrl)))).Methods(http.MethodGet)
+	r.HandleWithMetrics("/document/{id}", middleware.Logger(middleware.RBAC(rbac, update(ctrl)))).Methods(http.MethodPut)
+	r.HandleWithMetrics("/document/{id}", middleware.Logger(middleware.RBAC(rbac, delete(ctrl)))).Methods(http.MethodDelete)
 }
 
-func ready(ctrl *controller.Controller) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "text/html")
-		err := ctrl.Ready()
-		if err != nil {
-			service.Respond(w, http.StatusServiceUnavailable, []byte(http.StatusText(http.StatusServiceUnavailable)))
-		} else {
-			service.Respond(w, http.StatusOK, []byte(http.StatusText(http.StatusOK)))
-		}
-	}
-}
-
-func health() http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		w.Header().Set("Content-Type", "text/html")
-		service.Respond(w, http.StatusOK, []byte(http.StatusText(http.StatusOK)))
-	}
-}
-
-func info(buildinfo *service.BuildInfo) http.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request) {
-		buildinfo.Uptime = time.Now().Sub(buildinfo.Start).String()
-		service.RespondWithJSON(w, http.StatusOK, buildinfo)
-	}
-}
-
-// swagger:route POST / Model insert
+// swagger:route POST / Document insert
 //
 //     Consumes:
 //     - application/json
@@ -110,7 +65,7 @@ func info(buildinfo *service.BuildInfo) http.HandlerFunc {
 //     Parameters:
 //     + name: request
 //       in: body
-//       type: Model
+//       type: Document
 //
 //     Responses:
 //       default: ErrorResponse
@@ -139,7 +94,7 @@ func insert(ctrl *controller.Controller) http.HandlerFunc {
 			e.Str("handler", "insert").Str("id", hex).AnErr("context", ctx.Err()).Int64("resp_time", time.Now().Sub(start).Milliseconds()).Send()
 		}(e, start)
 
-		var document dto.Model
+		var document dto.Document
 		err = json.NewDecoder(r.Body).Decode(&document)
 		if err != nil {
 			service.RespondWithError(w, http.StatusBadRequest, err)
@@ -167,7 +122,7 @@ func insert(ctrl *controller.Controller) http.HandlerFunc {
 	}
 }
 
-// swagger:route GET / Model find
+// swagger:route GET / Document find
 //
 //     Consumes:
 //     - application/json
@@ -233,7 +188,7 @@ func find(ctrl *controller.Controller) http.HandlerFunc {
 	}
 }
 
-// swagger:route GET /{id} Model get
+// swagger:route GET /{id} Document get
 //
 //     Consumes:
 //     - application/json
@@ -255,7 +210,7 @@ func find(ctrl *controller.Controller) http.HandlerFunc {
 //
 //     Responses:
 //       default: ErrorResponse
-//       200: Model OK
+//       200: Document OK
 //       400: ErrorResponse Bad Request
 //       401: UnauthorizedResponse Unauthorized
 //       403: ForbiddenResponse Forbidden
@@ -307,7 +262,7 @@ func get(ctrl *controller.Controller) http.HandlerFunc {
 	}
 }
 
-// swagger:route PUT /{id} Model update
+// swagger:route PUT /{id} Document update
 //
 //     Consumes:
 //     - application/json
@@ -328,7 +283,7 @@ func get(ctrl *controller.Controller) http.HandlerFunc {
 //       required: true
 //     + name: request
 //       in: body
-//       type: Model
+//       type: Document
 //
 //     Responses:
 //       default: ErrorResponse
@@ -382,7 +337,7 @@ func update(ctrl *controller.Controller) http.HandlerFunc {
 			return
 		}
 
-		var document dto.Model
+		var document dto.Document
 		err = json.NewDecoder(r.Body).Decode(&document)
 		if err != nil {
 			service.RespondWithError(w, http.StatusBadRequest, err)
@@ -425,7 +380,7 @@ func update(ctrl *controller.Controller) http.HandlerFunc {
 	}
 }
 
-// swagger:route DELETE /{id} Model delete
+// swagger:route DELETE /{id} Document delete
 //
 //     Consumes:
 //     - application/json

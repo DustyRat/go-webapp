@@ -4,8 +4,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-// Model database model
-type Model struct {
+// Document database model
+type Document struct {
 	ID    *primitive.ObjectID `json:"-" bson:"_id,omitempty"`
 	Audit Audit               `json:"-" bson:",inline"`
 

@@ -1,5 +1,5 @@
 db = db.getSiblingDB('Example')
-var collection = db.getCollection("Model");
+var collection = db.getCollection("Document");
 
 /*
 *   _id's starting with 0 - get

@@ -3,7 +3,7 @@ module github.com/DustyRat/go-webapp
 go 1.16
 
 require (
-	github.com/DustyRat/go-metrics v0.0.1
+	github.com/DustyRat/go-metrics v0.0.3
 	github.com/go-openapi/errors v0.20.0
 	github.com/go-openapi/strfmt v0.20.1
 	github.com/go-openapi/swag v0.19.15

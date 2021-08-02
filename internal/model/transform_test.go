@@ -16,17 +16,17 @@ func init() {
 
 func Test_TransformFromDTO(t *testing.T) {
 	type args struct {
-		dto model.Model
+		dto model.Document
 	}
 	tests := []struct {
 		name string
 		args args
-		want Model
+		want Document
 	}{
 		{
 			name: "test",
 			args: args{
-				dto: model.Model{
+				dto: model.Document{
 					ID: utils.PPrimitiveObjectID("000000000000000000000001"),
 					Audit: model.Audit{
 						CreatedBy: model.User{
@@ -45,7 +45,7 @@ func Test_TransformFromDTO(t *testing.T) {
 					},
 				},
 			},
-			want: Model{
+			want: Document{
 				ID: utils.PPrimitiveObjectID("000000000000000000000001"),
 				Audit: Audit{
 					CreatedBy: &User{
@@ -76,17 +76,17 @@ func Test_TransformFromDTO(t *testing.T) {
 
 func Test_TransformToDTO(t *testing.T) {
 	type args struct {
-		detail Model
+		detail Document
 	}
 	tests := []struct {
 		name string
 		args args
-		want model.Model
+		want model.Document
 	}{
 		{
 			name: "test",
 			args: args{
-				detail: Model{
+				detail: Document{
 					ID: utils.PPrimitiveObjectID("000000000000000000000001"),
 					Audit: Audit{
 						CreatedBy: &User{
@@ -105,7 +105,7 @@ func Test_TransformToDTO(t *testing.T) {
 					},
 				},
 			},
-			want: model.Model{
+			want: model.Document{
 				ID: utils.PPrimitiveObjectID("000000000000000000000001"),
 				Audit: model.Audit{
 					CreatedBy: model.User{
@@ -126,7 +126,7 @@ func Test_TransformToDTO(t *testing.T) {
 		}, {
 			name: "nil CreatedBy",
 			args: args{
-				detail: Model{
+				detail: Document{
 					ID: utils.PPrimitiveObjectID("000000000000000000000001"),
 					Audit: Audit{
 						CreatedBy: nil,
@@ -141,7 +141,7 @@ func Test_TransformToDTO(t *testing.T) {
 					},
 				},
 			},
-			want: model.Model{
+			want: model.Document{
 				ID: utils.PPrimitiveObjectID("000000000000000000000001"),
 				Audit: model.Audit{
 					CreatedBy: model.User{},

@@ -1,13 +1,13 @@
 {
   "name": "example",
   "port": 3000,
-  "debug": false,
+  "debug": true,
   "log-level": "info",
   "mongo": {
     "database": "Example",
     "url": "mongodb://localhost:27017"
   },
   "collections": {
-    "Model": "Model"
+    "Document": "Document"
   }
 }

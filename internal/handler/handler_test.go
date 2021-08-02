@@ -30,7 +30,7 @@ var (
 			URL:      "mongodb://localhost:27017",
 		},
 		Collections: map[string]string{
-			"Model": "Model",
+			"Document": "Document",
 		},
 	}
 )
@@ -55,13 +55,13 @@ func Test_insert(t *testing.T) {
 	opts := cmp.Options{
 		utils.EquateErrors(),
 		cmpopts.IgnoreFields(model.CreatedResponse{}, "ID"),
-		cmpopts.IgnoreFields(model.Model{}, "ID"),
+		cmpopts.IgnoreFields(model.Document{}, "ID"),
 		cmpopts.IgnoreFields(model.Audit{}, "CreatedTs", "UpdatedTs"),
 	}
 
 	type result struct {
 		Response model.CreatedResponse
-		Document model.Model
+		Document model.Document
 	}
 	type request struct {
 		vars  map[string]string
@@ -138,7 +138,7 @@ func Test_insert(t *testing.T) {
 				get(ctrl).ServeHTTP(recorder, request)
 				response := recorder.Result()
 
-				document := model.Model{}
+				document := model.Document{}
 				if err := json.NewDecoder(response.Body).Decode(&document); err != nil {
 					t.Errorf("handler.go insert() error = %v", err)
 					return
@@ -385,7 +385,7 @@ func Test_get(t *testing.T) {
 			var responseBody interface{}
 			switch response.StatusCode {
 			case http.StatusOK:
-				body := model.Model{}
+				body := model.Document{}
 				if err := json.NewDecoder(response.Body).Decode(&body); err != nil {
 					t.Errorf("handler.go get() error = %v", err)
 					return
@@ -431,7 +431,7 @@ func Test_update(t *testing.T) {
 
 	type result struct {
 		Response model.UpdatedResponse
-		Document model.Model
+		Document model.Document
 	}
 	type request struct {
 		vars  map[string]string
@@ -458,7 +458,7 @@ func Test_update(t *testing.T) {
 					SAMAccountName: "john.doe",
 				},
 				vars: map[string]string{"id": "01"},
-				body: model.Model{},
+				body: model.Document{},
 			},
 			response: response{
 				StatusCode: http.StatusBadRequest,
@@ -476,7 +476,7 @@ func Test_update(t *testing.T) {
 					SAMAccountName: "john.doe",
 				},
 				vars: map[string]string{"id": "ZXCVBNM<ASDFGHJKL:"},
-				body: model.Model{},
+				body: model.Document{},
 			},
 			response: response{
 				StatusCode: http.StatusBadRequest,
@@ -494,7 +494,7 @@ func Test_update(t *testing.T) {
 					SAMAccountName: "john.doe",
 				},
 				vars: map[string]string{"id": "0"},
-				body: model.Model{},
+				body: model.Document{},
 			},
 			response: response{
 				StatusCode: http.StatusBadRequest,
@@ -512,7 +512,7 @@ func Test_update(t *testing.T) {
 					SAMAccountName: "john.doe",
 				},
 				vars: map[string]string{"id": "000000000000000000000000"},
-				body: model.Model{},
+				body: model.Document{},
 			},
 			response: response{
 				StatusCode: http.StatusNotFound,
@@ -580,7 +580,7 @@ func Test_update(t *testing.T) {
 				get(ctrl).ServeHTTP(recorder, request)
 				response := recorder.Result()
 
-				document := model.Model{}
+				document := model.Document{}
 				if err := json.NewDecoder(response.Body).Decode(&document); err != nil {
 					t.Errorf("handler.go update() error = %v", err)
 					return
@@ -760,7 +760,7 @@ func Test_delete(t *testing.T) {
 				case http.StatusNotFound:
 					responseBody = nil
 				default:
-					document := model.Model{}
+					document := model.Document{}
 					if err := json.NewDecoder(response.Body).Decode(&document); err != nil {
 						t.Errorf("handler.go delete() error = %v", err)
 						return

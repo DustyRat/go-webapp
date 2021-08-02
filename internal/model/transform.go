@@ -5,8 +5,8 @@ import (
 )
 
 // TransformFromDTO dto model -> database model
-func TransformFromDTO(dto model.Model) Model {
-	return Model{
+func TransformFromDTO(dto model.Document) Document {
+	return Document{
 		ID: dto.ID,
 		Audit: Audit{
 			CreatedBy: &User{
@@ -27,8 +27,8 @@ func TransformFromDTO(dto model.Model) Model {
 }
 
 // TransformToDTO database model -> dto model
-func TransformToDTO(detail Model) model.Model {
-	return model.Model{
+func TransformToDTO(detail Document) model.Document {
+	return model.Document{
 		ID: detail.ID,
 		Audit: model.Audit{
 			CreatedBy: func() model.User {
