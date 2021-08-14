@@ -1,8 +1,8 @@
 package db
 
 import (
-	"github.com/DustyRat/go-webapp/internal/config"
-	"github.com/DustyRat/go-webapp/internal/database/mgo"
+	"github.com/dustyrat/go-webapp/internal/config"
+	"github.com/dustyrat/go-webapp/internal/database/mgo"
 )
 
 // Initialize creates a new Datasource object and populates it with tested connections to sql and mongo databases.

@@ -7,12 +7,12 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/DustyRat/go-webapp/internal/config"
-	"github.com/DustyRat/go-webapp/internal/database/mgo"
-	"github.com/DustyRat/go-webapp/internal/model"
-	"github.com/DustyRat/go-webapp/internal/options"
-	"github.com/DustyRat/go-webapp/internal/utils"
-	dto "github.com/DustyRat/go-webapp/pkg/model"
+	"github.com/dustyrat/go-webapp/internal/config"
+	"github.com/dustyrat/go-webapp/internal/database/mgo"
+	"github.com/dustyrat/go-webapp/internal/model"
+	"github.com/dustyrat/go-webapp/internal/options"
+	"github.com/dustyrat/go-webapp/internal/utils"
+	dto "github.com/dustyrat/go-webapp/pkg/model"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"

@@ -27,8 +27,8 @@ package main
 import (
 	"time"
 
-	"github.com/DustyRat/go-webapp/internal/server"
-	"github.com/DustyRat/go-webapp/internal/service"
+	"github.com/dustyrat/go-webapp/internal/server"
+	"github.com/dustyrat/go-webapp/internal/service"
 
 	_ "github.com/go-openapi/errors"   // Go Open API errors
 	_ "github.com/go-openapi/strfmt"   // Go Open API fmt

@@ -5,15 +5,15 @@ import (
 	"net/url"
 	"time"
 
-	"github.com/DustyRat/go-webapp/internal/config"
-	db "github.com/DustyRat/go-webapp/internal/database"
-	"github.com/DustyRat/go-webapp/internal/database/mgo"
-	"github.com/DustyRat/go-webapp/internal/model"
-	"github.com/DustyRat/go-webapp/internal/options"
-	dtoModel "github.com/DustyRat/go-webapp/pkg/model"
+	"github.com/dustyrat/go-webapp/internal/config"
+	db "github.com/dustyrat/go-webapp/internal/database"
+	"github.com/dustyrat/go-webapp/internal/database/mgo"
+	"github.com/dustyrat/go-webapp/internal/model"
+	"github.com/dustyrat/go-webapp/internal/options"
+	dtoModel "github.com/dustyrat/go-webapp/pkg/model"
 
-	collection "github.com/DustyRat/go-metrics/db/mgo"
-	"github.com/DustyRat/go-metrics/metrics"
+	collection "github.com/dustyrat/go-metrics/db/mgo"
+	"github.com/dustyrat/go-metrics/metrics"
 
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"

@@ -5,7 +5,7 @@ import (
 	"net/url"
 	"strconv"
 
-	"github.com/DustyRat/go-webapp/internal/options"
+	"github.com/dustyrat/go-webapp/internal/options"
 
 	"github.com/pkg/errors"
 )

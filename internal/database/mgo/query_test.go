@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/DustyRat/go-webapp/internal/utils"
+	"github.com/dustyrat/go-webapp/internal/utils"
 	"github.com/google/go-cmp/cmp"
 	"github.com/pkg/errors"
 	"github.com/rs/zerolog"

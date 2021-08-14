@@ -7,14 +7,14 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/DustyRat/go-webapp/internal/controller"
-	"github.com/DustyRat/go-webapp/internal/middleware"
-	"github.com/DustyRat/go-webapp/internal/model"
-	"github.com/DustyRat/go-webapp/internal/options"
-	"github.com/DustyRat/go-webapp/internal/service"
-	dto "github.com/DustyRat/go-webapp/pkg/model"
+	"github.com/dustyrat/go-webapp/internal/controller"
+	"github.com/dustyrat/go-webapp/internal/middleware"
+	"github.com/dustyrat/go-webapp/internal/model"
+	"github.com/dustyrat/go-webapp/internal/options"
+	"github.com/dustyrat/go-webapp/internal/service"
+	dto "github.com/dustyrat/go-webapp/pkg/model"
 
-	router "github.com/DustyRat/go-metrics/router/mux"
+	router "github.com/dustyrat/go-metrics/router/mux"
 
 	"github.com/gorilla/mux"
 	"github.com/rs/zerolog"

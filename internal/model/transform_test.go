@@ -3,8 +3,8 @@ package model
 import (
 	"testing"
 
-	"github.com/DustyRat/go-webapp/internal/utils"
-	"github.com/DustyRat/go-webapp/pkg/model"
+	"github.com/dustyrat/go-webapp/internal/utils"
+	"github.com/dustyrat/go-webapp/pkg/model"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/rs/zerolog"

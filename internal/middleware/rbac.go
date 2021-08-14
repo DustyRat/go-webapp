@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 
-	"github.com/DustyRat/go-webapp/internal/service"
+	"github.com/dustyrat/go-webapp/internal/service"
 
 	"github.com/gorilla/context"
 )

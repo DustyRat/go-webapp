@@ -4,10 +4,10 @@ import (
 	"context"
 	"time"
 
-	"github.com/DustyRat/go-webapp/internal/model"
+	"github.com/dustyrat/go-webapp/internal/model"
 
-	"github.com/DustyRat/go-metrics/db/mgo"
-	"github.com/DustyRat/go-metrics/metrics"
+	"github.com/dustyrat/go-metrics/db/mgo"
+	"github.com/dustyrat/go-metrics/metrics"
 
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"

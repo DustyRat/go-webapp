@@ -5,10 +5,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/DustyRat/go-webapp/internal/controller"
-	"github.com/DustyRat/go-webapp/pkg/model"
+	"github.com/dustyrat/go-webapp/internal/controller"
+	"github.com/dustyrat/go-webapp/pkg/model"
 
-	router "github.com/DustyRat/go-metrics/router/mux"
+	router "github.com/dustyrat/go-metrics/router/mux"
 
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/rs/zerolog/log"

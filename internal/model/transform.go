@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/DustyRat/go-webapp/pkg/model"
+	"github.com/dustyrat/go-webapp/pkg/model"
 )
 
 // TransformFromDTO dto model -> database model

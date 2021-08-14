@@ -5,8 +5,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/DustyRat/go-webapp/internal/model"
-	"github.com/DustyRat/go-webapp/internal/utils"
+	"github.com/dustyrat/go-webapp/internal/model"
+	"github.com/dustyrat/go-webapp/internal/utils"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/google/go-cmp/cmp/cmpopts"

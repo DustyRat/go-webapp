@@ -1,8 +1,3 @@
-# github.com/DustyRat/go-metrics v0.0.3
-## explicit
-github.com/DustyRat/go-metrics/db/mgo
-github.com/DustyRat/go-metrics/metrics
-github.com/DustyRat/go-metrics/router/mux
 # github.com/PuerkitoBio/purell v1.1.1
 github.com/PuerkitoBio/purell
 # github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578
@@ -13,6 +8,11 @@ github.com/asaskevich/govalidator
 github.com/beorn7/perks/quantile
 # github.com/cespare/xxhash/v2 v2.1.1
 github.com/cespare/xxhash/v2
+# github.com/dustyrat/go-metrics v0.0.4
+## explicit
+github.com/dustyrat/go-metrics/db/mgo
+github.com/dustyrat/go-metrics/metrics
+github.com/dustyrat/go-metrics/router/mux
 # github.com/go-openapi/analysis v0.20.0
 github.com/go-openapi/analysis
 github.com/go-openapi/analysis/internal
@@ -48,7 +48,7 @@ github.com/golang/protobuf/ptypes/duration
 github.com/golang/protobuf/ptypes/timestamp
 # github.com/golang/snappy v0.0.1
 github.com/golang/snappy
-# github.com/google/go-cmp v0.5.6
+# github.com/google/go-cmp v0.5.5
 ## explicit
 github.com/google/go-cmp/cmp
 github.com/google/go-cmp/cmp/cmpopts
@@ -119,7 +119,7 @@ github.com/xdg-go/scram
 github.com/xdg-go/stringprep
 # github.com/youmark/pkcs8 v0.0.0-20181117223130-1be2e3e5546d
 github.com/youmark/pkcs8
-# go.mongodb.org/mongo-driver v1.7.0
+# go.mongodb.org/mongo-driver v1.7.1
 ## explicit
 go.mongodb.org/mongo-driver/bson
 go.mongodb.org/mongo-driver/bson/bsoncodec

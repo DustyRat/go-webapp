@@ -6,9 +6,9 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/DustyRat/go-metrics/db/mgo"
-	"github.com/DustyRat/go-webapp/internal/config"
-	"github.com/DustyRat/go-webapp/internal/utils"
+	"github.com/dustyrat/go-metrics/db/mgo"
+	"github.com/dustyrat/go-webapp/internal/config"
+	"github.com/dustyrat/go-webapp/internal/utils"
 	"github.com/google/go-cmp/cmp"
 	"github.com/rs/zerolog"
 	"go.mongodb.org/mongo-driver/bson"

@@ -4,12 +4,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/DustyRat/go-webapp/internal/config"
-	"github.com/DustyRat/go-webapp/internal/controller"
-	"github.com/DustyRat/go-webapp/internal/handler"
-	"github.com/DustyRat/go-webapp/internal/service"
+	"github.com/dustyrat/go-webapp/internal/config"
+	"github.com/dustyrat/go-webapp/internal/controller"
+	"github.com/dustyrat/go-webapp/internal/handler"
+	"github.com/dustyrat/go-webapp/internal/service"
 
-	router "github.com/DustyRat/go-metrics/router/mux"
+	router "github.com/dustyrat/go-metrics/router/mux"
 
 	"github.com/gorilla/mux"
 	"github.com/pkg/errors"

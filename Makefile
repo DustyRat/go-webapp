@@ -1,4 +1,4 @@
-IMAGE_NAME		?= example
+IMAGE_NAME	?= example
 EXT_PORT	?= 3000
 INT_PORT	?= 3000
 

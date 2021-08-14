@@ -30,7 +30,7 @@ definitions:
         type: integer
         x-go-name: Version
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   ConflictResponse:
     properties:
       error:
@@ -45,7 +45,7 @@ definitions:
         x-go-name: Message
     title: ConflictResponse ...
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   CreatedResponse:
     properties:
       id:
@@ -57,7 +57,7 @@ definitions:
         x-go-name: ID
     title: CreatedResponse ...
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   Document:
     properties:
       createdBy:
@@ -93,7 +93,7 @@ definitions:
         type: integer
         x-go-name: Version
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   ErrorResponse:
     properties:
       error:
@@ -102,13 +102,13 @@ definitions:
       errors:
         $ref: '#/definitions/Errors'
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   Errors:
     description: Errors holds multiple errors
     items:
       type: string
     type: array
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   ForbiddenResponse:
     properties:
       error:
@@ -124,7 +124,7 @@ definitions:
         x-go-name: Message
     title: ForbiddenResponse ...
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   Link:
     description: Link reference pagination links
     properties:
@@ -139,7 +139,7 @@ definitions:
         type: string
         x-go-name: Rel
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   List:
     description: List paginated list of Documents
     properties:
@@ -164,7 +164,7 @@ definitions:
       warnings:
         $ref: '#/definitions/Errors'
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   OKResponse:
     properties:
       id:
@@ -176,7 +176,7 @@ definitions:
         x-go-name: ID
     title: OKResponse ...
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   ObjectID:
     items:
       format: uint8
@@ -198,7 +198,7 @@ definitions:
         x-go-name: Message
     title: UnauthorizedResponse ...
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   UpdatedResponse:
     properties:
       id:
@@ -210,7 +210,7 @@ definitions:
         x-go-name: ID
     title: UpdatedResponse ...
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
   User:
     properties:
       firstName:
@@ -232,7 +232,7 @@ definitions:
         type: string
         x-go-name: Username
     type: object
-    x-go-package: github.com/DustyRat/go-webapp/pkg/model
+    x-go-package: github.com/dustyrat/go-webapp/pkg/model
 info:
   contact:
     email: dustin.k.ratcliffe@gmail.com
