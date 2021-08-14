@@ -305,3 +305,7 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/go,linux,macos,windows,visualstudiocode,intellij,eclipse,vim,notepadpp
+coverage.html
+coverage.xml
+junit-report.xml
+profile.cov

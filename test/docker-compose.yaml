@@ -1,4 +1,4 @@
-version: '3.5'
+version: "3.8"
 
 services:
   unit_tests:
@@ -9,9 +9,15 @@ services:
     environment:
       - "MONGO_URL=mongodb://mongo:27017"
     volumes:
-      - ./:/coverage
-    working_dir:  "/root"
-    command: "go test ./... -coverprofile=/coverage/coverage.out"
+      - ../:/root/out
+    working_dir: "/root"
+    command: >
+      sh -c "
+        go test -v -tags musl -coverprofile=./out/profile.cov ./... 2>&1 | tee report.out && \
+        cat report.out | go-junit-report -set-exit-code > ./out/junit-report.xml && \
+        cat ./out/profile.cov | gocover-cobertura > ./out/coverage.xml && \
+        go tool cover -html=./out/profile.cov -o ./out/coverage.html
+      "
     depends_on:
       - mongo
   mongo:

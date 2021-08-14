@@ -28,7 +28,7 @@ func Insert(ctx context.Context, collection *mgo.Collection, document model.Docu
 	var err error
 	e := log.Debug().Str("method", "Insert")
 	defer func(e *zerolog.Event, start time.Time) {
-		e.Int64("resp_time", time.Now().Sub(start).Milliseconds()).Err(err).Send()
+		e.Int64("resp_time", time.Since(start).Milliseconds()).Err(err).Send()
 	}(e, start)
 
 	/** Read Only **/
@@ -54,7 +54,7 @@ func Find(ctx context.Context, collection *mgo.Collection, filter bson.M, opts .
 	var err error
 	e := log.Debug().Str("method", "Find")
 	defer func(e *zerolog.Event, start time.Time) {
-		e.Int64("resp_time", time.Now().Sub(start).Milliseconds()).Err(err).Send()
+		e.Int64("resp_time", time.Since(start).Milliseconds()).Err(err).Send()
 	}(e, start)
 
 	documents := make([]model.Document, 0)
@@ -83,7 +83,7 @@ func Get(ctx context.Context, collection *mgo.Collection, id primitive.ObjectID)
 	var err error
 	e := log.Debug().Str("method", "Get")
 	defer func(e *zerolog.Event, start time.Time) {
-		e.Int64("resp_time", time.Now().Sub(start).Milliseconds()).Err(err).Send()
+		e.Int64("resp_time", time.Since(start).Milliseconds()).Err(err).Send()
 	}(e, start)
 
 	filter := bson.M{"_id": id}
@@ -104,7 +104,7 @@ func Update(ctx context.Context, collection *mgo.Collection, id primitive.Object
 	var err error
 	e := log.Debug().Str("method", "Update")
 	defer func(e *zerolog.Event, start time.Time) {
-		e.Int64("resp_time", time.Now().Sub(start).Milliseconds()).Err(err).Send()
+		e.Int64("resp_time", time.Since(start).Milliseconds()).Err(err).Send()
 	}(e, start)
 
 	filter := bson.M{
@@ -141,7 +141,7 @@ func Delete(ctx context.Context, collection *mgo.Collection, id primitive.Object
 	var err error
 	e := log.Debug().Str("method", "Delete")
 	defer func(e *zerolog.Event, start time.Time) {
-		e.Int64("resp_time", time.Now().Sub(start).Milliseconds()).Err(err).Send()
+		e.Int64("resp_time", time.Since(start).Milliseconds()).Err(err).Send()
 	}(e, start)
 
 	filter := bson.M{"_id": id}

@@ -5,7 +5,7 @@ clean_up() {
   docker compose -f ./test/docker-compose.yaml down -v --rmi all --remove-orphans
 }
 
-echo "Starting mock database..."
+echo "Starting mock services..."
 docker compose -f ./test/docker-compose.yaml up -d mongo
 
 echo "Running unit tests"
@@ -36,13 +36,10 @@ else
                                                                                                           "
 fi
 
-coverage_file="./test/coverage.out"
+coverage_file="./profile.cov"
 if [[ -f "$coverage_file" ]]; then
   coverage=$(go tool cover -func ${coverage_file} | grep total | awk '{print $3}')
-  echo "Test Coverage: $coverage"
-
-  echo "To view coverage run:
-  go tool cover --html=$coverage_file"
+  echo "Coverage: $coverage"
 fi
 
 exit $status

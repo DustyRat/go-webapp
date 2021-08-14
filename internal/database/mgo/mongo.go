@@ -64,7 +64,7 @@ func GetVersion(ctx context.Context, collection *mgo.Collection, id primitive.Ob
 	var err error
 	e := log.Debug().Str("method", "GetVersion")
 	defer func(e *zerolog.Event, start time.Time) {
-		e.Int64("resp_time", time.Now().Sub(start).Milliseconds()).Err(err).Send()
+		e.Int64("resp_time", time.Since(start).Milliseconds()).Err(err).Send()
 	}(e, start)
 
 	document := struct {
@@ -87,7 +87,7 @@ func Count(ctx context.Context, collection *mgo.Collection, filter bson.M) (int6
 	var err error
 	e := log.Debug().Str("method", "Count")
 	defer func(e *zerolog.Event, start time.Time) {
-		e.Int64("resp_time", time.Now().Sub(start).Milliseconds()).Err(err).Send()
+		e.Int64("resp_time", time.Since(start).Milliseconds()).Err(err).Send()
 	}(e, start)
 
 	var count int64

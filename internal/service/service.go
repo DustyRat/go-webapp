@@ -23,6 +23,7 @@ type BuildInfo struct {
 	GitURL    string    `json:"git_url,omitempty"`
 	Branch    string    `json:"branch,omitempty"`
 	SHA       string    `json:"sha,omitempty"`
+	Version   string    `json:"version,omitempty"`
 	Debug     bool      `json:"debug"`
 }
 

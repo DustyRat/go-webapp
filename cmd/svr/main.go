@@ -44,7 +44,8 @@ var (
 	buildHost,
 	gitURL,
 	branch,
-	sha string
+	sha,
+	version string
 	start = time.Now()
 )
 
@@ -56,6 +57,7 @@ func main() {
 		GitURL:    gitURL,
 		Branch:    branch,
 		SHA:       sha,
+		Version:   version,
 		Start:     start,
 	})
 	if err != nil {

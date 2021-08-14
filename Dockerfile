@@ -6,6 +6,8 @@ ARG BUILD_HOST
 ARG GIT_URL
 ARG BRANCH
 ARG SHA
+ARG VERSION
+ARG PORT
 
 # Install Tools and dependencies
 RUN apk update; \
@@ -32,6 +34,7 @@ RUN go build -ldflags "\
     -X main.gitURL=$GIT_URL \
     -X main.branch=$BRANCH \
     -X main.sha=$SHA \
+    -X main.version=$VERSION" \
     -o main ./cmd/svr/main.go;
 
 # Move to / directory as the place for resulting binary folder
@@ -47,7 +50,7 @@ RUN cp -r /build/swagge[r] ./swagger
 RUN rm -rf /build
 
 # Export necessary port
-EXPOSE 3000
+EXPOSE $PORT
 
 # Command to run when starting the container
 CMD ["/main"]

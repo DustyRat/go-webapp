@@ -101,7 +101,7 @@ type Link struct {
 	// Example: next
 	Rel string `json:"rel"`
 	// Link
-	// Example: /birth?page=2
+	// Example: /documents?page=2
 	Href string `json:"href"`
 }
 

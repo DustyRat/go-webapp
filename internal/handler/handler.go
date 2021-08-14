@@ -91,7 +91,7 @@ func insert(ctrl *controller.Controller) http.HandlerFunc {
 			if err != nil {
 				e = log.Error().Stack().Err(err)
 			}
-			e.Str("handler", "insert").Str("id", hex).AnErr("context", ctx.Err()).Int64("resp_time", time.Now().Sub(start).Milliseconds()).Send()
+			e.Str("handler", "insert").Str("id", hex).AnErr("context", ctx.Err()).Int64("resp_time", time.Since(start).Milliseconds()).Send()
 		}(e, start)
 
 		var document dto.Document
@@ -162,7 +162,7 @@ func find(ctrl *controller.Controller) http.HandlerFunc {
 			if err != nil {
 				e = log.Error().Stack().Err(err)
 			}
-			e.Str("handler", "find").AnErr("context", ctx.Err()).Str("query", r.URL.RawQuery).Int64("resp_time", time.Now().Sub(start).Milliseconds()).Send()
+			e.Str("handler", "find").AnErr("context", ctx.Err()).Str("query", r.URL.RawQuery).Int64("resp_time", time.Since(start).Milliseconds()).Send()
 		}(e, start)
 
 		documents, count, more, errs, warnings, err := ctrl.Find(ctx, query, opts)
@@ -232,7 +232,7 @@ func get(ctrl *controller.Controller) http.HandlerFunc {
 			if err != nil {
 				e = log.Error().Stack().Err(err)
 			}
-			e.Str("handler", "get").Str("id", id).AnErr("context", ctx.Err()).Int64("resp_time", time.Now().Sub(start).Milliseconds()).Send()
+			e.Str("handler", "get").Str("id", id).AnErr("context", ctx.Err()).Int64("resp_time", time.Since(start).Milliseconds()).Send()
 		}(e, start)
 
 		document, err := ctrl.Get(ctx, id)
@@ -310,7 +310,7 @@ func update(ctrl *controller.Controller) http.HandlerFunc {
 			if err != nil {
 				e = log.Error().Stack().Err(err)
 			}
-			e.Str("handler", "update").Str("id", id).AnErr("context", ctx.Err()).Int64("resp_time", time.Now().Sub(start).Milliseconds()).Send()
+			e.Str("handler", "update").Str("id", id).AnErr("context", ctx.Err()).Int64("resp_time", time.Since(start).Milliseconds()).Send()
 		}(e, start)
 
 		version, err := ctrl.GetVersion(ctx, id)
@@ -423,7 +423,7 @@ func delete(ctrl *controller.Controller) http.HandlerFunc {
 			if err != nil {
 				e = log.Error().Stack().Err(err)
 			}
-			e.Str("handler", "delete").Str("id", id).AnErr("context", ctx.Err()).Int64("resp_time", time.Now().Sub(start).Milliseconds()).Send()
+			e.Str("handler", "delete").Str("id", id).AnErr("context", ctx.Err()).Int64("resp_time", time.Since(start).Milliseconds()).Send()
 		}(e, start)
 
 		result, err := ctrl.Delete(ctx, id)

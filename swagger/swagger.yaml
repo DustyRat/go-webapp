@@ -130,7 +130,7 @@ definitions:
     properties:
       href:
         description: Link
-        example: /birth?page=2
+        example: /documents?page=2
         type: string
         x-go-name: Href
       rel:
