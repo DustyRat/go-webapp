@@ -1,2 +1,2 @@
-* test=auto eol=lf encoding=utf-8
-*.go test diff=go
+* text=auto eol=lf encoding=utf-8
+*.go text diff=go
