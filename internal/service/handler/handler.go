@@ -23,30 +23,13 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-// BuildInfo ...
-type BuildInfo struct {
-	Start     time.Time `json:"-"`
-	Uptime    string    `json:"uptime,omitempty"`
-	Version   string    `json:"version,omitempty"`
-	BuildDate string    `json:"build_date,omitempty"`
-	BuildHost string    `json:"build_host,omitempty"`
-	GitURL    string    `json:"git_url,omitempty"`
-	Branch    string    `json:"branch,omitempty"`
-	Debug     bool      `json:"debug"`
-}
-
-func rbac(w http.ResponseWriter, r *http.Request) (middleware.User, error) {
-	// TODO: RBAC implementation
-	return middleware.User{SAMAccountName: "ANONYMOUS"}, nil
-}
-
 // AddHandlers ...
-func AddHandlers(r *router.Router, buildinfo *service.BuildInfo, ctrl *controller.Controller) {
-	r.HandleWithMetrics("/document", middleware.Logger(middleware.RBAC(rbac, insert(ctrl)))).Methods(http.MethodPost)
-	r.HandleWithMetrics("/documents", middleware.Logger(middleware.RBAC(rbac, find(ctrl)))).Methods(http.MethodGet)
-	r.HandleWithMetrics("/document/{id}", middleware.Logger(middleware.RBAC(rbac, get(ctrl)))).Methods(http.MethodGet)
-	r.HandleWithMetrics("/document/{id}", middleware.Logger(middleware.RBAC(rbac, update(ctrl)))).Methods(http.MethodPut)
-	r.HandleWithMetrics("/document/{id}", middleware.Logger(middleware.RBAC(rbac, delete(ctrl)))).Methods(http.MethodDelete)
+func AddHandlers(r *router.Router, ctrl *controller.Controller, rbacFn func(w http.ResponseWriter, r *http.Request) (middleware.User, error)) {
+	r.HandleWithMetrics("/document", middleware.Logger(middleware.RBAC(rbacFn, insert(ctrl)))).Methods(http.MethodPost)
+	r.HandleWithMetrics("/documents", middleware.Logger(middleware.RBAC(rbacFn, find(ctrl)))).Methods(http.MethodGet)
+	r.HandleWithMetrics("/document/{id}", middleware.Logger(middleware.RBAC(rbacFn, get(ctrl)))).Methods(http.MethodGet)
+	r.HandleWithMetrics("/document/{id}", middleware.Logger(middleware.RBAC(rbacFn, update(ctrl)))).Methods(http.MethodPut)
+	r.HandleWithMetrics("/document/{id}", middleware.Logger(middleware.RBAC(rbacFn, delete(ctrl)))).Methods(http.MethodDelete)
 }
 
 // swagger:route POST /document Document insert

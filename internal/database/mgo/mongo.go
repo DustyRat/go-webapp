@@ -43,7 +43,9 @@ func Connect(dbname, rawurl string, collections map[string]string, opts ...*opti
 
 // Disconnect mongodb connection
 func (db *Mongo) Disconnect() {
-	db.database.Client().Disconnect(context.Background())
+	if err := db.database.Client().Disconnect(context.Background()); err != nil {
+		log.Error().Err(err).Send()
+	}
 }
 
 // GetCollection ...

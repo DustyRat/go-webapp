@@ -100,13 +100,13 @@ func (c *Controller) Find(ctx context.Context, query url.Values, opts options.Op
 		o.SetSort(sort)
 	}
 
-	details, err := mgo.Find(ctx, c.collection, match, o)
+	documents, err := mgo.Find(ctx, c.collection, match, o)
 	if err != nil {
 		return []dtoModel.Document{}, 0, false, nil, nil, err
 	}
 
 	dtos := make([]dtoModel.Document, 0)
-	for _, document := range details {
+	for _, document := range documents {
 		dtos = append(dtos, model.TransformToDTO(document))
 	}
 

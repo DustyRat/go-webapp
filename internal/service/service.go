@@ -93,5 +93,7 @@ func RespondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 // Respond ...
 func Respond(w http.ResponseWriter, code int, body []byte) {
 	w.WriteHeader(code)
-	w.Write(body)
+	if _, err := w.Write(body); err != nil {
+		log.Error().Err(err).Send()
+	}
 }

@@ -135,8 +135,7 @@ func TestGetVersion(t *testing.T) {
 	}
 
 	type args struct {
-		collection *mgo.Collection
-		id         primitive.ObjectID
+		id primitive.ObjectID
 	}
 	type want struct {
 		Version uint
@@ -182,8 +181,7 @@ func TestCount(t *testing.T) {
 	}
 
 	type args struct {
-		collection *mgo.Collection
-		filter     bson.M
+		filter bson.M
 	}
 	type want struct {
 		Count int64
