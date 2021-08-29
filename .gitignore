@@ -1,6 +1,12 @@
+# Created by https://www.toptal.com/developers/gitignore/api/go,vim,linux,macos,windows,intellij,notepadpp,certificates,visualstudiocode,eclipse
+# Edit at https://www.toptal.com/developers/gitignore?templates=go,vim,linux,macos,windows,intellij,notepadpp,certificates,visualstudiocode,eclipse
 
-# Created by https://www.toptal.com/developers/gitignore/api/go,linux,macos,windows,visualstudiocode,intellij,eclipse,vim,notepadpp
-# Edit at https://www.toptal.com/developers/gitignore?templates=go,linux,macos,windows,visualstudiocode,intellij,eclipse,vim,notepadpp
+### certificates ###
+*.pem
+*.key
+*.crt
+*.cer
+*.priv
 
 ### Eclipse ###
 .metadata
@@ -304,7 +310,7 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.toptal.com/developers/gitignore/api/go,linux,macos,windows,visualstudiocode,intellij,eclipse,vim,notepadpp
+# End of https://www.toptal.com/developers/gitignore/api/go,vim,linux,macos,windows,intellij,notepadpp,certificates,visualstudiocode,eclipse
 coverage.html
 coverage.xml
 junit-report.xml
