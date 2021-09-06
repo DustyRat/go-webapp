@@ -11,3 +11,11 @@ type Document struct {
 
 	// TODO: Add fields
 }
+
+// func (d Document) MarshalJSON() ([]byte, error) {
+// 	panic("do not marshal internal struct")
+// }
+
+// func (d *Document) UnmarshalJSON([]byte) error  {
+// 	panic("do not unmarshal to internal struct")
+// }
