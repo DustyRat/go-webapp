@@ -1,0 +1,149 @@
+{{define "base"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<title>{{template "title" .}}</title>
+
+	<link rel="stylesheet" href="/assets/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/vendor/fontawesome/css/fontawesome.min.css">
+	<link rel="stylesheet" href="/assets/vendor/fontawesome/css/all.min.css">
+	<link rel="stylesheet" href="/assets/vendor/metismenu/metisMenu.min.css">
+	<link rel="stylesheet" href="/assets/vendor/chaldene/css/chaldene.min.css">
+	<!-- <link rel="stylesheet" href="/assets/css/main.css"> -->
+
+</head>
+
+<body class="page-fixed side-fixed">
+	<div class="app">
+		<div class="app-wrap">
+			<header class="app-heading">
+				<nav class="navbar navbar-default navbar-fixed-top shadow-2dp">
+					<div class="navbar-header bg-amethyst">
+						<nav class="nav navbar-header-nav">
+							<a href="#" data-side=collapse><i class="fa fa-fw fa-lg fa-bars"></i></a>
+						</nav>
+						.app-heading
+					</div>
+				</nav>
+			</header>
+			<div class="app-container">
+				<aside class="app-side">
+					<header class="side-heading">
+						<div class="u-sizeFill p-a-20 bg-midnight-blue">
+							.side-heading
+						</div>
+					</header>
+					<div class="side-content">
+						<div class="u-sizeFill p-a-20 bg-sun-flower">
+							.side-content
+						</div>
+						<nav class="side-nav">
+							<ul class="metismenu nav nav-inverse nav-bordered nav-stacked" data-plugin="metismenu">
+								<li id="admin-menu">
+									<a href="javascript:;">
+										<span class="nav-icon"><i class="fa fa-fw fa-lg fa-user-secret"></i></span>
+										<span class="nav-title">Administration</span>
+										<span class="nav-tools">
+											<i class="fa fa-fw fa-solid fa-angle-left"></i>
+											<!-- <i class="fa fa-fw fa-solid fa-angle-down"></i> -->
+										</span>
+									</a>
+									<ul class="nav nav-sub">
+										<li>
+											<a id="user-link" href="${createLink(uri: '/user/list')}">
+												<span class="nav-icon"><i class="fa fa-fw fa-users"></i></span>
+												<span class="nav-title">Users</span>
+											</a>
+										</li>
+										<li>
+											<a id="role-link" href="${createLink(uri: '/role/list')}">
+												<span class="nav-icon"><i class="fa fa-fw fa-shield-alt"></i></span>
+												<span class="nav-title">Roles</span>
+											</a>
+										</li>
+										<li>
+											<a id="permission-link" href="${createLink(uri: '/permission/list')}">
+												<span class="nav-icon"><i class="fa fa-fw fa-lock"></i></span>
+												<span class="nav-title">Permissions</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<li id="home">
+									<a href="/home">
+										<span class="nav-icon"><i class="fa fa-fw fa-lg fa-home"></i></span>
+										<span class="nav-title">Home</span>
+									</a>
+								</li>
+								<li id="dashboard-menu">
+									<a href="javascript:;">
+										<span class="nav-icon"><i class="fa fa-fw fa-lg fa-tachometer-alt"></i></span>
+										<span class="nav-title">Dashboards</span>
+										<span class="nav-tools">
+											<i class="fa fa-fw fa-solid fa-angle-left"></i>
+										</span>
+									</a>
+									<ul class="nav nav-sub">
+										<li>
+											<a id="bookin-totals-link"
+												href="${createLink(uri: '/dashboard/bookinTotals')}">
+												<span class="nav-icon"><i class="fa fa-fw fa-chart-line"></i></span>
+												<span class="nav-title">Charts</span>
+											</a>
+										</li>
+										<li>
+											<a id="multi-bookin-link"
+												href="${createLink(uri: '/dashboard/multiBookins')}">
+												<span class="nav-icon"><i class="fa fa-fw fa-chart-bar"></i></span>
+												<span class="nav-title">Graphs</span>
+											</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</nav>
+					</div>
+					<footer class="side-footer">
+						<div class="u-sizeFill p-a-20 bg-peter-river">
+							.side-footer
+						</div>
+					</footer>
+				</aside>
+				<div class="app-main">
+					<header class="main-heading">
+						{{template "main-heading" .}}
+					</header>
+					<div class="main-content">
+						{{template "main-content" .}}
+					</div>
+					<footer class="main-footer">
+						{{template "main-footer" .}}
+					</footer>
+				</div>
+			</div>
+			<footer class="app-footer">
+				<div class="u-sizeFill p-a-20 bg-green-sea">
+					.app-footer
+				</div>
+			</footer>
+		</div>
+	</div>
+	<!-- jQuery (necessary for Bootstrap's & elektron JavaScript plugins) -->
+	<script src="/assets/vendor/jquery/jquery.min.js"></script>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="/assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/assets/vendor/fontawesome/js/fontawesome.min.js"></script>
+	<script src="/assets/vendor/fontawesome/js/all.min.js"></script>
+	<script src="/assets/vendor/metismenu/metisMenu.min.js"></script>
+
+	<script src="/assets/vendor/chaldene/js/chaldene.min.js"></script>
+	{{template "post-script" .}}
+</body>
+</html>
+{{end}}

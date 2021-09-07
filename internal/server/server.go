@@ -8,6 +8,7 @@ import (
 	"github.com/dustyrat/go-webapp/internal/controller"
 	"github.com/dustyrat/go-webapp/internal/rbac"
 	"github.com/dustyrat/go-webapp/internal/service"
+	"github.com/dustyrat/go-webapp/internal/service/file"
 	"github.com/dustyrat/go-webapp/internal/service/handler"
 
 	router "github.com/dustyrat/go-metrics/router/mux"
@@ -45,6 +46,8 @@ func Run(info *service.BuildInfo) error {
 	service.AddHandlers(r, info, ctrl, conf.Debug)
 	rbac := rbac.RBAC{} // TODO: RBAC initialization
 	handler.AddHandlers(r, ctrl, rbac.Middleware)
+
+	file.AddHandlers(r)
 
 	srv := http.Server{
 		Addr:    fmt.Sprintf(":%d", conf.Port),

@@ -34,9 +34,9 @@ func AddHandlers(r *router.Router, buildinfo *BuildInfo, ctrl *controller.Contro
 	r.Handle("/health", health()).Methods(http.MethodGet, http.MethodHead)
 	r.Handle("/metrics", promhttp.Handler())
 
-	fs := http.FileServer(http.Dir("./swagger/"))
-	r.PathPrefix("/swagger/").Handler(http.StripPrefix("/swagger/", fs))
-	http.Handle("/swagger/", r)
+	// fs := http.FileServer(http.Dir("./swagger/"))
+	// r.PathPrefix("/swagger/").Handler(http.StripPrefix("/swagger/", fs))
+	// http.Handle("/swagger/", r)
 
 	if debug {
 		log.Warn().Msg("pprof enabled")
