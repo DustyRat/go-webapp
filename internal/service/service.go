@@ -3,6 +3,7 @@ package service
 import (
 	"encoding/json"
 	"net/http"
+	"text/template"
 	"time"
 
 	"github.com/dustyrat/go-webapp/internal/controller"
@@ -95,5 +96,20 @@ func Respond(w http.ResponseWriter, code int, body []byte) {
 	w.WriteHeader(code)
 	if _, err := w.Write(body); err != nil {
 		log.Error().Err(err).Send()
+	}
+}
+
+func Build(files []string) (*template.Template, error) {
+	templates, err := template.ParseFiles(files...)
+	if err != nil {
+		return nil, err
+	}
+	return templates, nil
+}
+
+func Render(w http.ResponseWriter, templates *template.Template) {
+	if err := templates.Execute(w, nil); err != nil {
+		log.Error().Err(err).Send()
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 }
