@@ -96,6 +96,7 @@ docker-scan: ## Scan the docker image
 	docker scan -f $(DOCKERFILE) $(IMAGE_NAME):build
 
 docker-run: ## Run the image from the docker-build command
+	${MAKE} docker-build
 	docker run -it --rm -v "$(shell pwd)/config/:/config" -p $(EXT_PORT):$(INT_PORT) --name=$(IMAGE_NAME) $(IMAGE_NAME):build
 
 docker-push: ## Push the image with tag latest and version

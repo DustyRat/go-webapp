@@ -44,7 +44,8 @@ WORKDIR /
 RUN cp /build/main .
 
 # Copy static files
-RUN cp -r /build/swagge[r] ./swagger
+RUN cp -r /build/swagger ./swagger
+RUN cp -r /build/web ./web
 
 # Clean up build folder
 RUN rm -rf /build

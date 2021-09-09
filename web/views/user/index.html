@@ -1,0 +1,35 @@
+{{template "base" .}}
+
+{{define "title"}}Users{{end}}
+
+{{define "main-heading"}}
+<div class="u-sizeFill p-a-20">
+	Users
+</div>
+{{end}}
+
+{{define "main-content"}}
+<div class="u-sizeFill p-a-20 bg-alizarin">
+	<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ut urna est. Nulla facilisi.
+		Nulla hendrerit tellus ligula, in commodo nulla tempus a. Integer a mauris sem. Vivamus
+		vel turpis blandit, ullamcorper neque a, auctor libero. Donec quis tempor ligula, vitae
+		condimentum sapien. Praesent eleifend maximus mollis. Sed odio purus, placerat vel odio
+		et, porttitor vehicula metus. Ut ultricies ante arcu, et feugiat ante fermentum eget.
+		Aliquam rutrum ligula justo, ut pulvinar sem ultrices id.</p>
+</div>
+{{end}}
+
+{{define "main-footer"}}
+<div class="u-sizeFill p-a-20 bg-pumpkin">
+	.main-footer
+</div>
+{{end}}
+
+{{define "post-script"}}
+<script>
+	$(document).ready(function() {
+		$('#admin-menu').addClass("mm-active");
+		$('#user-link').addClass("mm-active");
+	});
+</script>
+{{end}}
