@@ -69,19 +69,19 @@
 }
 
 .nav>a.mm-active {
-    color: #1abc9c;
+    color: #1c9b4d;
 }
 
 .nav>li>a.mm-active {
-    color: #1abc9c;
+    color: #1c9b4d;
 }
 
 .nav>li.mm-active>a {
-    color: #1abc9c;
+    color: #1c9b4d;
 }
 
 .logo .logo-text {
-    background: #1abc9c;
+    background: #1c9b4d;
     color: #ffffff;
 }
 
@@ -116,7 +116,7 @@
 }
 
 .app-side .side-nav ul>li>a.mm-active>.nav-icon {
-    color: #0ea783;
+    color: #1c9b4d;
 }
 
 .app-side .side-nav ul>li>a:hover,
@@ -133,7 +133,7 @@
 
 .app-side .side-nav ul>li.mm-active>a>.nav-icon,
 .app-side .side-nav ul>li.active-mini>a>.nav-icon {
-    color: #0ea783;
+    color: #1c9b4d;
 }
 
 .app-side .nav-header {
@@ -165,7 +165,7 @@
 }
 
 .navbar-default .navbar-header-nav>li>a.mm-active>.nav-icon {
-    color: #0ea783;
+    color: #1c9b4d;
 }
 
 .navbar-default .navbar-header-nav>li>a:hover,
@@ -197,7 +197,7 @@
 }
 
 .navbar-form .icon-after-input .form-control:focus+.icon a {
-    color: #1abc9c;
+    color: #1c9b4d;
 }
 
 .navbar-inverse {
@@ -294,19 +294,19 @@
 }
 
 .nav.nav-bordered>li:not(.disabled)>a.mm-active::after {
-    background: #1abc9c;
+    background: #1c9b4d;
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
 }
 
 .nav.nav-bordered>li.mm-active:not(.disabled)>a::after {
-    background: #0ea783;
+    background: #1c9b4d;
     -webkit-transform: scale3d(1, 1, 1);
     transform: scale3d(1, 1, 1);
 }
 
 .nav-tabs>li:not(.mm-active)>a {
-    color: #1abc9c;
+    color: #1c9b4d;
 }
 
 .nav-tabs>li.disabled>a {
