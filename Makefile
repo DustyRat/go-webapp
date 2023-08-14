@@ -1,4 +1,5 @@
-IMAGE_NAME	?= example
+APP_NAME	?= example-app
+IMAGE_NAME	?= example-image
 EXT_PORT	?= 3000
 INT_PORT	?= 3000
 
@@ -13,8 +14,8 @@ DOCKERFILE			?= ./Dockerfile
 DOCKER_REGISTRY		?= # if set it should finished by /
 TAG					:= v$(VERSION)
 
-CONTEXT		?= # kubectl context
-NAMESPACE	?= # kubectl namespace
+CONTEXT		?= local # kubectl context
+NAMESPACE	?= test # kubectl namespace
 
 HELM_CHART	?= ./deployment/helm
 HELM_OPTS	?= # helm additional options
@@ -115,10 +116,17 @@ docker-clean: ## Clean up docker (Stop containers, prune network, containers and
 
 ## Helm:
 helm-deploy: ## Deploy the image to k8s via helm
-	helm upgrade $(IMAGE_NAME) -i $(HELM_CHART) $(HELM_OPTS) \
+	helm upgrade $(APP_NAME) -i $(HELM_CHART) $(HELM_OPTS) \
 		--set image.repository=$(DOCKER_REGISTRY)$(IMAGE_NAME) \
 		--set image.tag=$(TAG) \
-		--kube-context $(CONTEXT) \
+		--kube-context=$(CONTEXT) \
+		--namespace=$(NAMESPACE)
+
+helm-template: ## Use helm to generate k8s manafest files
+	helm template $(APP_NAME) $(HELM_CHART) $(HELM_OPTS) \
+		--set image.repository=$(DOCKER_REGISTRY)$(IMAGE_NAME) \
+		--set image.tag=$(TAG) \
+		--kube-context=$(CONTEXT) \
 		--namespace=$(NAMESPACE)
 
 ## Help:
