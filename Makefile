@@ -1,5 +1,5 @@
-APP_NAME	?= example-app
-IMAGE_NAME	?= example-image
+APP_NAME	?= example
+IMAGE_NAME	?= example
 EXT_PORT	?= 3000
 INT_PORT	?= 3000
 
@@ -8,17 +8,21 @@ BUILD_HOST  := $(shell hostname)
 GIT_URL  	:= $(shell git config --get remote.origin.url)
 BRANCH  	:= $(shell git rev-parse --abbrev-ref HEAD)
 SHA			:= $(shell git rev-parse HEAD)
-VERSION  	:= $(shell git rev-parse --short=8 HEAD)
+# TODO: set via git tags? 
+VERSION		:= v$(shell git rev-parse --short=8 HEAD)$(shell git diff --quiet || echo '-LOCAL')
 
 DOCKERFILE			?= ./Dockerfile
-DOCKER_REGISTRY		?= # if set it should finished by /
-TAG					:= v$(VERSION)
+DOCKER_REGISTRY		?= localhost:5000/
 
-CONTEXT		?= local # kubectl context
-NAMESPACE	?= test # kubectl namespace
+# kubectl context
+CONTEXT		?= docker-desktop
+# kubectl namespace
+NAMESPACE	?= development
 
 HELM_CHART	?= ./deployment/helm
 HELM_OPTS	?= # helm additional options
+
+HOST := example.internal
 
 GREEN  		:= $(shell tput -Txterm setaf 2)
 YELLOW 		:= $(shell tput -Txterm setaf 3)
@@ -82,6 +86,12 @@ lint-helm: ## Use helm lint on the helm charts of your projects
 	helm lint deployment/helm
 
 ## Docker:
+docker-registry-start: ## Start a local docker registry for testing
+	docker run -d -p 5000:5000 --restart=always --name registry registry:latest
+
+docker-registry-destroy: ## Stop and remove the container of the local docker registry
+	docker container stop registry && docker container rm -v registry
+
 docker-build: ## Use the dockerfile to build the image
 	docker build --no-cache -t $(IMAGE_NAME):build \
 		--build-arg BUILD_DATE=$(BUILD_DATE) \
@@ -100,15 +110,18 @@ docker-run: ## Run the image from the docker-build command
 	${MAKE} docker-build
 	docker run -it --rm -v "$(shell pwd)/config/:/config" -p $(EXT_PORT):$(INT_PORT) --name=$(IMAGE_NAME) $(IMAGE_NAME):build
 
+docker-stop: ## Stop the container
+	docker container stop $(IMAGE_NAME)
+
 docker-push: ## Push the image with tag latest and version
-	docker tag $(IMAGE_NAME):build $(DOCKER_REGISTRY)$(IMAGE_NAME):$(TAG)
+	docker tag $(IMAGE_NAME):build $(DOCKER_REGISTRY)$(IMAGE_NAME):$(VERSION)
 	docker tag $(IMAGE_NAME):build $(DOCKER_REGISTRY)$(IMAGE_NAME):latest
 	# Push the docker images
-	docker push $(DOCKER_REGISTRY)$(IMAGE_NAME):$(TAG)
+	docker push $(DOCKER_REGISTRY)$(IMAGE_NAME):$(VERSION)
 	docker push $(DOCKER_REGISTRY)$(IMAGE_NAME):latest
 
 docker-clean: ## Clean up docker (Stop containers, prune network, containers and images, remove volumes)
-	@docker stop $(shell docker ps -a -q) || true;
+	# @docker stop $(shell docker ps -a -q) || true;
 	@docker network prune -f || true;
 	@docker container prune -f || true;
 	@docker image prune -af || true;
@@ -118,16 +131,36 @@ docker-clean: ## Clean up docker (Stop containers, prune network, containers and
 helm-deploy: ## Deploy the image to k8s via helm
 	helm upgrade $(APP_NAME) -i $(HELM_CHART) $(HELM_OPTS) \
 		--set image.repository=$(DOCKER_REGISTRY)$(IMAGE_NAME) \
-		--set image.tag=$(TAG) \
+		--set image.tag=$(VERSION) \
+		--kube-context=$(CONTEXT) \
+		--namespace=$(NAMESPACE)
+
+helm-uninstall: ## Uninstall the image to k8s via helm
+	helm uninstall $(APP_NAME) \
 		--kube-context=$(CONTEXT) \
 		--namespace=$(NAMESPACE)
 
 helm-template: ## Use helm to generate k8s manafest files
-	helm template $(APP_NAME) $(HELM_CHART) $(HELM_OPTS) \
+	@helm template $(APP_NAME) $(HELM_CHART) $(HELM_OPTS) \
 		--set image.repository=$(DOCKER_REGISTRY)$(IMAGE_NAME) \
-		--set image.tag=$(TAG) \
+		--set image.tag=$(VERSION) \
 		--kube-context=$(CONTEXT) \
 		--namespace=$(NAMESPACE)
+
+## kubectl
+k8s-create-config:
+	kubectl create secret generic example-webapp --from-file=./config/config.json -o yaml \
+		--context $(CONTEXT) \
+		--namespace $(NAMESPACE)
+
+k8s-create-tls: ## Create self signed cert and key for tls and push the secret to k8s (local development only)
+	openssl genrsa -out ca.key 2048
+	openssl req -x509 -new -nodes -days 365 -key ca.key -out ca.crt -subj "/CN=$(HOST)"
+	kubectl create secret tls example-tls-secret \
+		--key ca.key \
+		--cert ca.crt \
+		--context $(CONTEXT) \
+		--namespace $(NAMESPACE)
 
 ## Help:
 help: ## Show this help.
